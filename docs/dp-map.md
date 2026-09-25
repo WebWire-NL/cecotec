@@ -41,3 +41,32 @@ Tuya standard sweeper layout (category `sd`); every entry confirmed against the 
 | 37 | `dust_collection_num` | `dust_collection_num` | Integer | 0..4 | RW |
 | 38 | `dust_collection_switch` | `dust_collection_switch` | Boolean | — | RW |
 | 39 | `customize_mode_switch` | `customize_mode_switch` | Boolean | — | RW |
+
+## Observed beyond the standard schema
+
+This model emits datapoints outside the Tuya standard set. Rather than guess at
+them, the table below records what each one actually held in a live `tinytuya`
+status dump, plus whether a **same-generation** device in the public tuya-local
+corpus gives a name for it. Unnamed rows are recorded so the next person does not
+have to re-derive them.
+
+| DP | live value | type | what is known |
+|---|---|---|---|
+| 40 | `installed` | Enum | mop presence. Same enum as Gadnic AC800 (`opn3uutjlhbeojab`), which maps it as a mop sensor. **Mapped in the config.** |
+| 45 | `false` | Boolean | named "Auto boost" by Gadnic AC800. Type verified here, function inherited. **Mapped, optional.** |
+| 48 | `false` | Boolean | named "Y-shape mop mode" by Gadnic AC800. Type verified here, function inherited. **Mapped, optional.** |
+| 49 | `false` | Boolean | unnamed by any same-generation config |
+| 50 | `true` | Boolean | unnamed by any same-generation config |
+| 51 | `10` | Integer | unnamed by any same-generation config |
+| 105 | `auto` | Enum | unnamed by any same-generation config |
+| 120 | `twice_cleaning_unfinished` | Enum | likely a cleaning-result code; value name is self-describing |
+| 141 | `false` | Boolean | unnamed by any same-generation config |
+| 144 | `true` | Boolean | unnamed by any same-generation config |
+| 145 | `true` | Boolean | unnamed by any same-generation config |
+| 147 | `true` | Boolean | unnamed by any same-generation config |
+| 148 | `1` | Integer | unnamed by any same-generation config |
+
+DPs in the standard table above that do **not** appear in a status dump (10, 11,
+12, 13, 14, 16, 18, 20, 22, 24, 25, 26, 27, 32, 33, 34) are write-only function
+datapoints. Their absence from `status()` is expected and does not mean they are
+unsupported.

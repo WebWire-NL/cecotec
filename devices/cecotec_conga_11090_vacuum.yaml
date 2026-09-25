@@ -250,14 +250,19 @@ entities:
     class: problem
     category: diagnostic
     dps:
+      # fault is a bitmap, and the device sends it as a plain integer (0 when
+      # healthy). `base64` expects a string and would not decode it; `bitfield`
+      # is the type that matches, as in the same-generation Gadnic AC800 config.
       - id: 28
-        type: base64
-        optional: true
+        type: bitfield
         name: sensor
         mapping:
-          - dps_val: null
+          - dps_val: 0
             value: false
           - value: true
+      - id: 28
+        type: bitfield
+        name: fault_code
   - entity: number
     name: Number of cleans
     icon: mdi:robot-vacuum
@@ -284,4 +289,47 @@ entities:
     dps:
       - id: 39
         type: boolean
+        name: switch
+
+  # ---- Added after a live cross-check of this unit against same-generation
+  # ---- configs in tuya-local. See docs/dp-map.md -> "Observed beyond the
+  # ---- standard schema".
+  #
+  # DP 40 is confirmed: this unit reports the literal value "installed", and a
+  # same-generation device (Gadnic AC800, opn3uutjlhbeojab) maps the same DP as
+  # mop presence with exactly that enum.
+  - entity: binary_sensor
+    name: Mop installed
+    icon: mdi:water-plus
+    category: diagnostic
+    dps:
+      - id: 40
+        type: string
+        optional: true
+        name: sensor
+        mapping:
+          - dps_val: installed
+            value: true
+          - value: false
+
+  # DP 45 and 48 are booleans this unit reports. Their names are inherited from
+  # the same-generation Gadnic AC800 config; that the DPs are boolean here is
+  # verified, what they *do* is not, so both are optional.
+  - entity: switch
+    name: Auto boost
+    icon: mdi:car-turbocharger
+    category: config
+    dps:
+      - id: 45
+        type: boolean
+        optional: true
+        name: switch
+  - entity: switch
+    name: Y-shape mop mode
+    icon: mdi:vector-square
+    category: config
+    dps:
+      - id: 48
+        type: boolean
+        optional: true
         name: switch
