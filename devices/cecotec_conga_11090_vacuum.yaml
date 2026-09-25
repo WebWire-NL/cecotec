@@ -102,6 +102,7 @@ entities:
     dps:
       - id: 10
         type: string
+        optional: true
         name: option
         mapping:
           - dps_val: low
@@ -117,6 +118,7 @@ entities:
     dps:
       - id: 13
         type: boolean
+        optional: true
         name: button
   - entity: sensor
     class: duration
@@ -162,6 +164,7 @@ entities:
     dps:
       - id: 18
         type: boolean
+        optional: true
         name: button
   - entity: number
     name: Roll brush life
@@ -181,6 +184,7 @@ entities:
     dps:
       - id: 20
         type: boolean
+        optional: true
         name: button
   - entity: number
     name: Filter life
@@ -200,6 +204,7 @@ entities:
     dps:
       - id: 22
         type: boolean
+        optional: true
         name: button
   - entity: number
     name: Mop cloth life
@@ -219,6 +224,7 @@ entities:
     dps:
       - id: 24
         type: boolean
+        optional: true
         name: button
   - entity: switch
     name: Do not disturb
@@ -227,6 +233,7 @@ entities:
     dps:
       - id: 25
         type: boolean
+        optional: true
         name: switch
   - entity: number
     translation_key: volume
@@ -234,6 +241,7 @@ entities:
     dps:
       - id: 26
         type: integer
+        optional: true
         name: value
         unit: "%"
         range:
@@ -245,6 +253,7 @@ entities:
     dps:
       - id: 27
         type: boolean
+        optional: true
         name: switch
   - entity: binary_sensor
     class: problem
@@ -291,13 +300,9 @@ entities:
         type: boolean
         name: switch
 
-  # ---- Added after a live cross-check of this unit against same-generation
-  # ---- configs in tuya-local. See docs/dp-map.md -> "Observed beyond the
-  # ---- standard schema".
-  #
-  # DP 40 is confirmed: this unit reports the literal value "installed", and a
-  # same-generation device (Gadnic AC800, opn3uutjlhbeojab) maps the same DP as
-  # mop presence with exactly that enum.
+  # Mop presence. This model reports the literal value "installed", and the
+  # same-generation Gadnic AC800 config (opn3uutjlhbeojab) maps the same
+  # datapoint as a mop sensor with exactly that enum.
   - entity: binary_sensor
     name: Mop installed
     icon: mdi:water-plus
